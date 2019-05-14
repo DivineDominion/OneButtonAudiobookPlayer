@@ -57,8 +57,8 @@ class Menu:
     def call_current_item(self, function_list):
         identifier, _, exec_sound = self.current_menu_item()
         play_sound(exec_sound)
-        # Execute function by name with "_" prefix to enable `continue`
-        mname = "_"+identifier
+        # Execute function by name with "on_" prefix to enable `continue`
+        mname = "on_"+identifier
         getattr(self.delegate, mname)()
 
 ##############################################################################
@@ -153,18 +153,18 @@ class App:
         self.current_menu = None
 
     # Menu action
-    def _next_chapter(self):
+    def on_next_chapter(self):
         print "Exec Next Chapter"
-    def _prev_chapter(self):
+    def on_prev_chapter(self):
         print "Exec Prev Chapter"
-    def _next_book(self):
+    def on_next_book(self):
         print "Exec Next Book"
-    def _prev_book(self):
+    def on_prev_book(self):
         print "Exec Prev Book"
-    def _shutdown(self):
+    def on_shutdown(self):
         print "Exec Shutdown"
         # check_call(['sudo', 'poweroff'])
-    def _continue(self):
+    def on_continue(self):
         print "Exec continue"
         self.close_menu()
 
