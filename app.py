@@ -3,6 +3,9 @@ from subprocess import check_call
 from signal import pause
 import pygame.mixer
 
+def load_sound(path):
+    return pygame.mixer.Sound(path)
+
 def play_sound(sound):
     channel = sound.play()
     while channel.get_busy() == True:
@@ -18,17 +21,20 @@ class Menu:
 
     def __init__(self, items, delegate):
         def sounds_from_idents(identifier):
+            # "continue.ogg" contains the menu title itself when changing selected menu items
+            # "ex_continue.ogg" contains the spoken instruction when the selection is confirmed
             fname = identifier + ".ogg"
             ex_fname = "ex_" + identifier + ".ogg"
             return [
                 identifier,
-                pygame.mixer.Sound("menu_sounds/" + fname),
-                pygame.mixer.Sound("menu_sounds/" + ex_fname),
+                load_sound("menu_sounds/" + fname),
+                load_sound("menu_sounds/" + ex_fname),
             ]
+        
         self.delegate = delegate
         self.items = map(sounds_from_idents, items)
         # Intro sound
-        play_sound(pygame.mixer.Sound("menu_sounds/main_menu.ogg"))
+        play_sound(load_sound("menu_sounds/main_menu.ogg"))
 
     def item_count(self):
         return len(self.items)
@@ -183,7 +189,11 @@ def main():
     app = App(main_led)
     main_btn.when_held = app.button_was_held
     main_btn.when_released = app.button_was_released
+    
+    # Startup complete
     print "Started"
+    play_sound(load_sound("device_sounds/on_boot_complete.ogg"))
+
     pause()
 
 if __name__ == "__main__":
