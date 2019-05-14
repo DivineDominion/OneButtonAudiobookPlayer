@@ -1,0 +1,6 @@
+python-mpd2>=0.5.5
+gpiozero>=1.5.0
+pygame>=1.9.6
+
+# Install via:
+# $ pip install -r requirements.txt
