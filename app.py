@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from gpiozero import Button, PWMLED
 from subprocess import check_call
 from signal import pause
@@ -19,7 +21,7 @@ class Menu:
     items = []
     current_index = 0
 
-    def __init__(self, items, delegate):
+    def __init__(self, orig_items, delegate):
         def sounds_from_idents(identifier):
             # "continue.ogg" contains the menu title itself when changing selected menu items
             # "ex_continue.ogg" contains the spoken instruction when the selection is confirmed
@@ -32,7 +34,7 @@ class Menu:
             ]
         
         self.delegate = delegate
-        self.items = map(sounds_from_idents, items)
+        self.items = list(map(sounds_from_idents, orig_items))
         # Intro sound
         play_sound(load_sound("menu_sounds/main_menu.ogg"))
 
@@ -57,7 +59,7 @@ class Menu:
 
     def present_current_menu_item(self):
         identifier, sound, _ = self.current_menu_item()
-        print "Selected: " + identifier
+        print("Selected: " + identifier)
         play_sound(sound)
 
     def call_current_item(self, function_list):
@@ -119,7 +121,7 @@ class App:
             self.pause()
         else:
             self.play()
-        print "Is playing now: " + str(self.is_playing)
+        print("Is playing now: " + str(self.is_playing))
 
     did_hold = False
     def button_was_released(self):
@@ -161,23 +163,23 @@ class App:
     # Menu action (delegate calls)
     
     def on_next_chapter(self):
-        print "Exec Next Chapter"
+        print("Exec Next Chapter")
 
     def on_prev_chapter(self):
-        print "Exec Prev Chapter"
+        print("Exec Prev Chapter")
 
     def on_next_book(self):
-        print "Exec Next Book"
+        print("Exec Next Book")
 
     def on_prev_book(self):
-        print "Exec Prev Book"
+        print("Exec Prev Book")
 
     def on_shutdown(self):
-        print "Exec Shutdown"
-        check_call ['sudo', 'poweroff']
+        print("Exec Shutdown")
+        check_call(['sudo', 'poweroff'])
 
     def on_continue(self):
-        print "Exec continue (closing menu)"
+        print("Exec continue (closing menu)")
         self.close_menu()
 
 ##############################################################################
@@ -191,7 +193,7 @@ def main():
     main_btn.when_released = app.button_was_released
     
     # Startup complete
-    print "Started"
+    print("Started")
     play_sound(load_sound("device_sounds/on_boot_complete.ogg"))
 
     pause()
