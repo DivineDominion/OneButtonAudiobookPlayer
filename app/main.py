@@ -120,7 +120,7 @@ class App:
 def main():
     pygame.mixer.init()
     main_led = PWMLED(17)
-    main_btn = Button(2, hold_time=3)
+    main_btn = Button(2, hold_time=2)
     app = App(main_led)
     main_btn.when_held = app.button_was_held
     main_btn.when_released = app.button_was_released
