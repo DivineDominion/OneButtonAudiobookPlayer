@@ -6,8 +6,8 @@ from signal import pause
 import pygame.mixer
 
 # Project files
-from menu_controller import MenuController
-from menu import Menu
+from menu.controller import MenuController
+from menu.menu import Menu
 from sound_helpers import *
 
 ##############################################################################
@@ -127,7 +127,7 @@ def main():
     
     # Startup complete
     print("Started")
-    play_sound(load_sound("device_sounds/on_boot_complete.ogg"))
+    play_sound(load_sound(device_sound_path("on_boot_complete.ogg")))
 
     pause()
 

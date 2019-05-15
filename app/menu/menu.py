@@ -4,7 +4,7 @@ import os
 
 from sound_helpers import *
 
-MENU_SOUNDS_DIR = "menu_sounds"
+
 
 class Menu:
     
@@ -23,14 +23,14 @@ class Menu:
             ex_fname = "ex_" + identifier + ".ogg"
             return [
                 identifier,
-                load_sound(os.path.join(MENU_SOUNDS_DIR, fname)),
-                load_sound(os.path.join(MENU_SOUNDS_DIR, ex_fname)),
+                load_sound(menu_sound_path(fname)),
+                load_sound(menu_sound_path(ex_fname)),
             ]
         
         self.delegate = delegate
         # Intro sound
         self.items = list(map(sounds_from_idents, orig_items))
-        play_sound(load_sound(os.path.join(MENU_SOUNDS_DIR, "main_menu.ogg")))
+        play_sound(load_sound(menu_sound_path("main_menu.ogg")))
         time.sleep(0.5)
 
     def item_count(self):
