@@ -1,3 +1,5 @@
+from subprocess import check_call
+
 class MenuController:
     
     app = None
@@ -24,3 +26,6 @@ class MenuController:
     def on_continue(self):
         print("Exec continue (closing menu)")
         self.close_menu()
+
+    def close_menu(self):
+        self.app.close_menu()
