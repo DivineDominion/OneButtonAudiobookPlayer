@@ -2,6 +2,9 @@ import pygame.mixer
 import time
 import os
 
+def initialize_sound():
+    pygame.mixer.init()
+
 def load_sound(path):
     return pygame.mixer.Sound(path)
 
