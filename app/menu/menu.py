@@ -2,9 +2,7 @@ import time
 import pygame.mixer
 import os
 
-from sound_helpers import *
-
-
+from app.sound_helpers import *
 
 class Menu:
     

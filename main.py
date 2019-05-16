@@ -2,15 +2,17 @@
 
 from gpiozero import Button, PWMLED
 from signal import pause
-from sound_helpers import *
-from app import App
+from app.sound_helpers import *
+from app.app import App
+from app.player import Player
 
 def main():
     # Initialize playing sounds
     initialize_sound()
     
     main_led = PWMLED(17)
-    app = App(main_led)
+    player = Player()
+    app = App(main_led, player)
 
     main_btn = Button(2, hold_time=2)
     main_btn.when_held = app.button_was_held
