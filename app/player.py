@@ -25,8 +25,11 @@ class MPDAdapter:
     def pause(self):
         self.client.pause()
 
-    def next_song(self):
+    def next(self):
         self.client.next()
+
+    def previous(self):
+        self.client.previous()
 
 class Player:
     def __init__(self, outputs, mpd_adapter = MPDAdapter()):
@@ -54,6 +57,11 @@ class Player:
         print("Is playing now: " + str(self.is_playing()))
 
     def next_song(self, autoplay = True):
-        self.mpd_adapter.next_song()
+        self.mpd_adapter.next()
         if autoplay and not self.is_playing():
             self.play()
+
+    def prev_song(self, autoplay = True):
+        self.mpd_adapter.previous()
+        if autoplay and not self.is_playing():
+            self.play
