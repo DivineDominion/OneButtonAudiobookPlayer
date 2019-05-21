@@ -5,18 +5,19 @@ from signal import pause
 from app.sound_helpers import *
 from app.app import App
 from app.player import Player
+from app.device.inputs import Inputs
 
 def main():
     # Initialize playing sounds
     initialize_sound()
-    
+
     main_led = PWMLED(17)
     player = Player()
     app = App(main_led, player)
 
-    main_btn = Button(2, hold_time=2)
-    main_btn.when_held = app.button_was_held
-    main_btn.when_released = app.button_was_released
+    inputs = Inputs()
+    inputs.when_button_clicked = app.button_was_clicked
+    inputs.when_button_held = app.button_was_held
     
     # Startup complete
     print("Started")

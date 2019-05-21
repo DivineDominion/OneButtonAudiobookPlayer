@@ -64,12 +64,6 @@ class App:
     # Button callbacks
     #
     
-    did_hold = False
-    def button_was_released(self):
-        if not self.did_hold:
-            self.button_was_clicked()
-        self.did_hold = False
-
     def button_was_clicked(self):
         if self.is_in_menu():
             self.current_menu.next_menu_item()
@@ -78,7 +72,6 @@ class App:
             self.player.play_pause()
 
     def button_was_held(self):
-        self.did_hold = True
         if self.is_in_menu():
             self.confirm_selection()
         else:
