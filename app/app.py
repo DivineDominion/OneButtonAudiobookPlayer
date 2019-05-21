@@ -1,6 +1,7 @@
 from app.menu.controller import MenuController
 from app.menu.menu import Menu
 from app.player import Player
+from app.device.outputs import Outputs
 
 # Menu identifiers are the same as the sound file names (*.ogg)
 RING_MENU = [
@@ -13,28 +14,21 @@ RING_MENU = [
 ]
 
 class App:
-
-    def __init__(self, led, player):
-        self.led = led
+    def __init__(self, outputs, player):
+        self.outputs = outputs
         self.player = player
-
-    def toggle_light(self, is_on):
-        if is_on:
-            self.led.value = 0.5
-        else:
-            self.led.off()
-
-    def toggle_blink(self, is_blinking):
-        if is_blinking:
-            self.led.blink()
-        else:
-            self.led.off()
 
     #
     # Menu management
     #
-   
+
     current_menu = None
+
+    def create_and_show_new_menu(self):
+        controller = MenuController(self)
+        self.current_menu = Menu(RING_MENU, controller)
+        self.current_menu.present_current_menu_item()
+
     def is_in_menu(self):
         return self.current_menu != None
 
@@ -51,19 +45,17 @@ class App:
 
     def open_new_menu(self):
         self.player.pause()
-        self.toggle_blink(True)
-        controller = MenuController(self)
-        self.current_menu = Menu(RING_MENU, controller)
-        self.current_menu.present_current_menu_item()
+        self.outputs.toggle_blink(True)
+        self.create_and_show_new_menu()
 
     def close_menu(self):
-        self.toggle_blink(False)
+        self.outputs.toggle_blink(False)
         self.current_menu = None
 
     #
     # Button callbacks
     #
-    
+
     def button_was_clicked(self):
         if self.is_in_menu():
             self.current_menu.next_menu_item()
