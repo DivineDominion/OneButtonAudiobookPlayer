@@ -10,6 +10,7 @@ class MenuController:
 
     def on_next_chapter(self):
         print("Exec Next Chapter")
+        self.player.next_song()
 
     def on_prev_chapter(self):
         print("Exec Prev Chapter")
