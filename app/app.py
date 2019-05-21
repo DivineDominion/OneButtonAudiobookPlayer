@@ -25,7 +25,7 @@ class App:
     current_menu = None
 
     def create_and_show_new_menu(self):
-        controller = MenuController(self)
+        controller = MenuController(self, self.player)
         self.current_menu = Menu(RING_MENU, controller)
         self.current_menu.present_current_menu_item()
 

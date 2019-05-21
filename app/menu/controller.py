@@ -1,12 +1,13 @@
 from subprocess import check_call
 
 class MenuController:
-    
+
     app = None
-    
-    def __init__(self, app):
+
+    def __init__(self, app, player):
         self.app = app
-        
+        self.player = player
+
     def on_next_chapter(self):
         print("Exec Next Chapter")
 
@@ -26,6 +27,7 @@ class MenuController:
     def on_continue(self):
         print("Exec continue (closing menu)")
         self.close_menu()
+        self.player.play()
 
     def close_menu(self):
         self.app.close_menu()
