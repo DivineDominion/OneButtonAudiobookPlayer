@@ -2,6 +2,7 @@ from app.menu.controller import MenuController
 from app.menu.menu import Menu
 from app.player.player import Player
 from app.device.outputs import Outputs
+from app.player.persistor import PlayerSessionPersistor
 
 # Menu identifiers are the same as the sound file names (*.ogg)
 RING_MENU = [
@@ -13,10 +14,21 @@ RING_MENU = [
     "shutdown"
 ]
 
+SESSION_PATH = "~/.1buttonplayer.json"
+
 class App:
     def __init__(self, outputs, player):
         self.outputs = outputs
         self.player = player
+
+    def startup(self):
+        self.player.restore_path(SESSION_PATH)
+
+        persistor = PlayerSessionPersistor(player, SESSION_PATH)
+        self.player.add_listener(persistor)
+
+        # Startup complete
+        print("Started")
 
     #
     # Menu management

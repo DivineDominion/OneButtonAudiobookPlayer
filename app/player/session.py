@@ -5,7 +5,11 @@ class Session:
 
     @staticmethod
     def from_file(path):
-        with open(os.path.abspath(os.path.expanduser(path)), 'r') as fp:
+        abspath = os.path.abspath(os.path.expanduser(path))
+        if not os.path.exists(abspath):
+            return None
+                                 
+        with open(abspath, 'r') as fp:
             data = json.load(fp)
             return Session(elapsed=data["elapsed"],
                            songid=data["songid"])

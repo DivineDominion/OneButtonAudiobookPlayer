@@ -56,5 +56,10 @@ class Player:
                        songid=self.mpd_adapter.songid())
 
     def restore(self, session):
+        if not session:
+            return
         self.mpd_adapter.seekid(songid=session.songid,
                                 time=session.elapsed)
+
+    def restore_path(self, path):
+        self.restore(Session.from_file(path))

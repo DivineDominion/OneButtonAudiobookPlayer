@@ -7,8 +7,6 @@ from app.player.player import Player
 from app.device.inputs import Inputs
 from app.device.outputs import Outputs
 from app.library import Library
-from app.player.session import Session
-from app.player.persistor import PlayerSessionPersistor
 
 def main():
     # Initialize playing sounds
@@ -18,19 +16,11 @@ def main():
     player = Player(outputs)
     app = App(outputs, player)
 
-    session_path = "~/.1buttonplayer.json"
-    if os.path.exists(os.path.expanduser(session_path)):
-        session = Session.from_file(session_path)
-        player.restore(session)
-    persistor = PlayerSessionPersistor(player, session_path)
-    player.add_listener(persistor)
-    
     inputs = Inputs()
     inputs.when_button_clicked = app.button_was_clicked
     inputs.when_button_held = app.button_was_held
 
-    # Startup complete
-    print("Started")
+    app.startup()
     play_sound(load_sound(device_sound_path("on_boot_complete.ogg")))
 
     pause()
