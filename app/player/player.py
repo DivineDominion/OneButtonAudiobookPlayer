@@ -6,6 +6,18 @@ class Player:
     def __init__(self, outputs, mpd_adapter = MPDAdapter()):
         self.outputs = outputs
         self.mpd_adapter = mpd_adapter
+        self._listeners = []
+
+    def add_listener(self, listener):
+        self._listeners.append(listener)
+
+    def fire(self, message):
+        mname = "on_" + message
+        handler = lambda obj: getattr(obj, mname)
+        calls = [handler(l) for l in self._listeners
+                 if handler(l) is not None]
+        for callback in calls:
+            callback(self)
 
     def is_playing(self):
         return self.mpd_adapter.is_playing()
@@ -14,11 +26,13 @@ class Player:
         if self.is_playing():
             self.outputs.toggle_light(False)
             self.mpd_adapter.pause()
+            self.fire("pause")
 
     def play(self):
         if not self.is_playing():
             self.outputs.toggle_light(True)
             self.mpd_adapter.play()
+            self.fire("play")
 
     def play_pause(self):
         if self.is_playing():

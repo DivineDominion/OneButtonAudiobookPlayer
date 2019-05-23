@@ -8,6 +8,7 @@ from app.device.inputs import Inputs
 from app.device.outputs import Outputs
 from app.library import Library
 from app.player.session import Session
+from app.player.persistor import PlayerSessionPersistor
 
 def main():
     # Initialize playing sounds
@@ -21,7 +22,8 @@ def main():
     if os.path.exists(os.path.expanduser(session_path)):
         session = Session.from_file(session_path)
         player.restore(session)
-    #player.current_session().write(session_path)
+    persistor = PlayerSessionPersistor(player, session_path)
+    player.add_listener(persistor)
     
     inputs = Inputs()
     inputs.when_button_clicked = app.button_was_clicked
