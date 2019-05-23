@@ -1,6 +1,6 @@
 from app.menu.controller import MenuController
 from app.menu.menu import Menu
-from app.player import Player
+from app.player.player import Player
 from app.device.outputs import Outputs
 
 # Menu identifiers are the same as the sound file names (*.ogg)

@@ -1,35 +1,6 @@
-import mpd
 from app.device.outputs import Outputs
-
-HOST = "localhost"
-PORT = 6600
-
-class MPDAdapter:
-    def __init__(self):
-        self.client = mpd.MPDClient()
-        self.client.connect(HOST, PORT)
-        print("MPD: " + self.client.mpd_version)
-        print(self.client.status())
-
-    def __del__(self):
-        print("Closing MPD connection ...")
-        self.client.close()
-        self.client.disconnect()
-
-    def is_playing(self):
-        return self.client.status()["state"] == "play"
-
-    def play(self):
-        self.client.play()
-
-    def pause(self):
-        self.client.pause()
-
-    def next(self):
-        self.client.next()
-
-    def previous(self):
-        self.client.previous()
+from app.player.mpdadapter import MPDAdapter
+from app.player.session import Session
 
 class Player:
     def __init__(self, outputs, mpd_adapter = MPDAdapter()):
@@ -65,3 +36,11 @@ class Player:
         self.mpd_adapter.previous()
         if autoplay and not self.is_playing():
             self.play
+
+    def current_session(self):
+        return Session(elapsed=self.mpd_adapter.elapsed(),
+                       songid=self.mpd_adapter.songid())
+
+    def restore_from_session(self, session):
+        self.client.seekid(songid=session.songid,
+                           time=session.elapsed)

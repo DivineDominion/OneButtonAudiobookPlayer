@@ -3,9 +3,11 @@
 from signal import pause
 from app.sound_helpers import *
 from app.app import App
-from app.player import Player
+from app.player.player import Player
 from app.device.inputs import Inputs
 from app.device.outputs import Outputs
+from app.library import Library
+from app.player.session import Session
 
 def main():
     # Initialize playing sounds
