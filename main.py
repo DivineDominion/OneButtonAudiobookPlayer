@@ -17,6 +17,12 @@ def main():
     player = Player(outputs)
     app = App(outputs, player)
 
+    session_path = "~/.1buttonplayer.json"
+    if os.path.exists(os.path.expanduser(session_path)):
+        session = Session.from_file(session_path)
+        player.restore(session)
+    #player.current_session().write(session_path)
+    
     inputs = Inputs()
     inputs.when_button_clicked = app.button_was_clicked
     inputs.when_button_held = app.button_was_held

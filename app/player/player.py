@@ -41,6 +41,6 @@ class Player:
         return Session(elapsed=self.mpd_adapter.elapsed(),
                        songid=self.mpd_adapter.songid())
 
-    def restore_from_session(self, session):
-        self.client.seekid(songid=session.songid,
-                           time=session.elapsed)
+    def restore(self, session):
+        self.mpd_adapter.seekid(songid=session.songid,
+                                time=session.elapsed)
