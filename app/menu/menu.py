@@ -1,8 +1,7 @@
 import time
 import pygame.mixer
 import os
-
-from app.sound_helpers import *
+import app.sound
 
 class Menu:
     
@@ -21,14 +20,16 @@ class Menu:
             ex_fname = "ex_" + identifier + ".ogg"
             return [
                 identifier,
-                load_sound(menu_sound_path(fname)),
-                load_sound(menu_sound_path(ex_fname)),
+                app.sound.load(app.sound.menu_sound_path(fname)),
+                app.sound.load(app.sound.menu_sound_path(ex_fname)),
             ]
         
         self.delegate = delegate
         # Intro sound
         self.items = list(map(sounds_from_idents, orig_items))
-        play_sound(load_sound(menu_sound_path("main_menu.ogg")))
+        app.sound.play(
+            app.sound.load(
+                app.sound.menu_sound_path("main_menu.ogg")))
         time.sleep(0.5)
 
     def item_count(self):
@@ -53,11 +54,11 @@ class Menu:
     def present_current_menu_item(self):
         identifier, sound, _ = self.current_menu_item()
         print("Selected: " + identifier)
-        play_sound(sound)
+        app.sound.play(sound)
 
     def call_current_item(self, function_list):
         identifier, _, exec_sound = self.current_menu_item()
-        play_sound(exec_sound)
+        app.sound.play(exec_sound)
         # Execute function by name with "on_" prefix to enable `continue`
         mname = "on_" + identifier
         getattr(self.delegate, mname)()

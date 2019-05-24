@@ -3,6 +3,7 @@ from app.menu.menu import Menu
 from app.player.player import Player
 from app.device.outputs import Outputs
 from app.player.persistor import PlayerSessionPersistor
+import app.sound
 
 # Menu identifiers are the same as the sound file names (*.ogg)
 RING_MENU = [
@@ -29,6 +30,7 @@ class App:
 
         # Startup complete
         print("Started")
+        app.sound.play(app.sound.DeviceSound.boot_complete)
 
     #
     # Menu management
