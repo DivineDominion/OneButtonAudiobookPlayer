@@ -25,7 +25,7 @@ class App:
     def startup(self):
         self.player.restore_path(SESSION_PATH)
 
-        persistor = PlayerSessionPersistor(player, SESSION_PATH)
+        persistor = PlayerSessionPersistor(self.player, SESSION_PATH)
         self.player.add_listener(persistor)
 
         # Startup complete
