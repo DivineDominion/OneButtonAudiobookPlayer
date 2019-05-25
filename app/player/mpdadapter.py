@@ -37,4 +37,10 @@ class MPDAdapter:
         return self.client.status()["elapsed"]
 
     def seekid(self, songid, time):
-        self.client.seekid(songid, time)
+        try:
+            self.client.seekid(songid, time)
+            return True
+        except mpd.base.CommandError as e:
+            # Could not read song ID or playlist
+            print("Failed to seek to songid '%s' at '%s's: %s" % (songid, time, e))
+            return False
