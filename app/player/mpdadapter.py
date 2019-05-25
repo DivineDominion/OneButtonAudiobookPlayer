@@ -48,3 +48,10 @@ class MPDAdapter:
     def replace_playlist(self, rel_path):
         self.client.clear()
         self.client.add(rel_path)
+        self._remove_album_voiceover()
+        
+    def _remove_album_voiceover(self):
+        """Removes the voice-over for a playlist, `_title.*` per convention."""
+        meta_file = self.client.playlistsearch("filename", "_title")
+        if meta_file:
+            self.client.deleteid(meta_file[0]["id"])
