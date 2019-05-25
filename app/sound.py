@@ -30,3 +30,4 @@ def device_sound_path(filename):
 
 class DeviceSound:
     boot_complete = load(device_sound_path("on_boot_complete.ogg"))
+    library_empty = load(device_sound_path("on_library_empty.ogg"))
