@@ -11,13 +11,9 @@ class Library:
                 and os.path.isdir(self.path)):
             raise Exception("Music library directory does not exist at: %s" % self.path)
 
-    def all_album_dir_paths(self):
-        """Returns a sorted list of library subdirectories as absolute paths."""
-        self._guard_exists()
-        dirs = sorted(os.listdir(self.path))
-        absolute_path = lambda d: os.path.join(self.path, d)
-        all_paths = map(absolute_path, dirs)
-        return [path for path in all_paths if os.path.isdir(path)]
-
     def all_albums(self):
-        return [Album(p) for p in self.all_album_dir_paths()]
+        """Returns a list of Album objects in the library subdirectories, sorted by name."""
+        self._guard_exists()
+        return [Album(rel_path=path)
+                for path in sorted(os.listdir(self.path))
+                if os.path.isdir(os.path.join(self.path, path))]

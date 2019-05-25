@@ -1,6 +1,7 @@
 from app.device.outputs import Outputs
-from app.player.mpdadapter import MPDAdapter
-from app.player.session import Session
+from .mpdadapter import MPDAdapter
+from .session import Session
+from app.library import Album
 
 class Player:
     def __init__(self, outputs, mpd_adapter = MPDAdapter()):
@@ -64,3 +65,7 @@ class Player:
 
     def restore_path(self, path):
         return self.restore(Session.from_file(path))
+
+    def change_album(self, album):
+        print("Changing to album \"%s\"" % album.name())
+        self.mpd_adapter.replace_playlist(rel_path=album.rel_path)

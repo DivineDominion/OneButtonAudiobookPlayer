@@ -44,3 +44,7 @@ class MPDAdapter:
             # Could not read song ID or playlist
             print("Failed to seek to songid '%s' at '%s's: %s" % (songid, time, e))
             return False
+
+    def replace_playlist(self, rel_path):
+        self.client.clear()
+        self.client.add(rel_path)

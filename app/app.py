@@ -25,9 +25,7 @@ class App:
         self.lib = lib
 
     def startup(self):
-        albums = self.lib.all_albums()
-
-        self.player.restore_path(SESSION_PATH)
+        self._restore_or_clear_session()
 
         persistor = PlayerSessionPersistor(self.player, SESSION_PATH)
         self.player.add_listener(persistor)
@@ -36,6 +34,20 @@ class App:
         print("Started")
         app.sound.play(app.sound.DeviceSound.boot_complete)
 
+    def _restore_or_clear_session(self):
+        if self.player.restore_path(SESSION_PATH):
+            return
+
+        print("Starting new session")
+        albums = self.lib.all_albums()
+
+        if not albums:
+            print("Library is empty :(")
+            app.sound.play(app.sound.DeviceSound.library_empty)
+            return
+
+        self.player.change_album(albums[0])
+        
     #
     # Menu management
     #
