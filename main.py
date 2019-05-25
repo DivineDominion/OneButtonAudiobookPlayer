@@ -2,9 +2,8 @@
 
 from signal import pause
 from app.app import App
-from app.player.player import Player
-from app.device.inputs import Inputs
-from app.device.outputs import Outputs
+from app.player import Player
+from app.device import (Inputs, Outputs)
 from app.library import Library
 
 def main():

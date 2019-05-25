@@ -1,10 +1,8 @@
-from app.menu.controller import MenuController
-from app.menu.menu import Menu
-from app.player.player import Player
-from app.device.outputs import Outputs
-from app.player.persistor import PlayerSessionPersistor
-import app.sound
+from app.menu import (Menu, MenuController)
+from app.player import (Player, PlayerSessionPersistor)
+from app.device import Outputs
 from app.library import Album
+import app.sound
 
 # Menu identifiers are the same as the sound file names (*.ogg)
 RING_MENU = [

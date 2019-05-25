@@ -1,6 +1,6 @@
-from app.device.outputs import Outputs
 from .mpdadapter import MPDAdapter
 from .session import Session
+from app.device import Outputs
 from app.library import Album
 
 class Player:
