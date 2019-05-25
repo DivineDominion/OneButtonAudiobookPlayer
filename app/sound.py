@@ -18,7 +18,7 @@ def play(sound):
         pygame.time.wait(100)
 
 MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
-RESOURCE_PATH = os.path.join(MODULE_PATH, "..", "..", "assets")
+RESOURCE_PATH = os.path.join(MODULE_PATH, "..", "assets")
 MENU_SOUNDS_PATH = os.path.join(RESOURCE_PATH, "menu_sounds")
 DEVICE_SOUNDS_PATH = os.path.join(RESOURCE_PATH, "device_sounds")
 
