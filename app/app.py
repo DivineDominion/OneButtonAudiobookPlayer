@@ -4,6 +4,7 @@ from app.player.player import Player
 from app.device.outputs import Outputs
 from app.player.persistor import PlayerSessionPersistor
 import app.sound
+from app.library import Album
 
 # Menu identifiers are the same as the sound file names (*.ogg)
 RING_MENU = [
@@ -18,11 +19,14 @@ RING_MENU = [
 SESSION_PATH = "~/.1buttonplayer.json"
 
 class App:
-    def __init__(self, outputs, player):
+    def __init__(self, outputs, player, lib):
         self.outputs = outputs
         self.player = player
+        self.lib = lib
 
     def startup(self):
+        albums = self.lib.all_albums()
+
         self.player.restore_path(SESSION_PATH)
 
         persistor = PlayerSessionPersistor(self.player, SESSION_PATH)

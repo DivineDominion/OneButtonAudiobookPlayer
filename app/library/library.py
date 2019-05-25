@@ -1,4 +1,5 @@
 import os
+from .album import Album
 
 class Library:
     def __init__(self, lib_path):
@@ -10,10 +11,13 @@ class Library:
                 and os.path.isdir(self.path)):
             raise Exception("Music library directory does not exist at: %s" % self.path)
 
-    def all_book_dir_paths(self):
+    def all_album_dir_paths(self):
         """Returns a sorted list of library subdirectories as absolute paths."""
         self._guard_exists()
         dirs = sorted(os.listdir(self.path))
         absolute_path = lambda d: os.path.join(self.path, d)
         all_paths = map(absolute_path, dirs)
         return [path for path in all_paths if os.path.isdir(path)]
+
+    def all_albums(self):
+        return [Album(p) for p in self.all_album_dir_paths()]

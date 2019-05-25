@@ -10,7 +10,8 @@ from app.library import Library
 def main():
     outputs = Outputs()
     app = App(outputs=outputs,
-              player=Player(outputs))
+              player=Player(outputs),
+              lib=Library(lib_path="/music/mpd/music"))
 
     inputs = Inputs()
     inputs.when_button_clicked = app.button_was_clicked
