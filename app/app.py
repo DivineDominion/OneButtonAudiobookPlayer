@@ -104,3 +104,7 @@ class App:
     def next_album(self):
         album = self.lib.next_album(self.player.current_album())
         self.player.change_album(album)
+
+    def prev_album(self):
+        album = self.lib.prev_album(self.player.current_album())
+        self.player.change_album(album)

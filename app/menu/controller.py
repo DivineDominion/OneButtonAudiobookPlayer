@@ -30,6 +30,8 @@ class MenuController:
 
     def on_prev_book(self):
         print("Exec Prev Book")
+        self.app.prev_album()
+        self.player.play()
 
     def on_shutdown(self):
         print("Exec Shutdown")
