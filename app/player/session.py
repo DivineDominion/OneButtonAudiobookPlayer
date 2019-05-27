@@ -1,8 +1,8 @@
 import os
 import json
+from app.library import Album
 
 class Session:
-
     @staticmethod
     def from_file(path):
         abspath = os.path.abspath(os.path.expanduser(path))
@@ -10,18 +10,25 @@ class Session:
             return None
 
         with open(abspath, 'r') as fp:
-            data = json.load(fp)
-            return Session(elapsed=data["elapsed"],
-                           songid=data["songid"])
+            try:
+                data = json.load(fp)
+                return Session(album=Album(rel_path=data["album"]),
+                               songid=data["songid"],
+                               elapsed=data["elapsed"])
+            except (json.decoder.JSONDecodeError, KeyError) as e:
+                print("Error loading from \"%s\": %s" % (abspath, e))
+                return None
 
-    def __init__(self, elapsed, songid):
-        self.elapsed = elapsed
+    def __init__(self, album, songid, elapsed):
+        self.album = album
         self.songid = songid
+        self.elapsed = elapsed
 
     def data(self):
         return {
-            "elapsed": self.elapsed,
-            "songid": self.songid
+            "album": self.album.rel_path,
+            "elapsed" : self.elapsed,
+            "songid" : self.songid
         }
 
     def write(self, path):

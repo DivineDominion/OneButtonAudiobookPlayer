@@ -53,13 +53,15 @@ class Player:
             self.play
 
     def current_session(self):
-        return Session(elapsed=self.mpd_adapter.elapsed(),
-                       songid=self.mpd_adapter.songid())
+        return Session(album=self.album,
+                       songid=self.mpd_adapter.songid(),
+                       elapsed=self.mpd_adapter.elapsed())
 
     def restore(self, session):
         if not session:
             return False
 
+        self.album = session.album
         return self.mpd_adapter.seekid(songid=session.songid,
                                        time=session.elapsed)
 
@@ -68,4 +70,5 @@ class Player:
 
     def change_album(self, album):
         print("Changing to album \"%s\"" % album.name())
+        self.album = album
         self.mpd_adapter.replace_playlist(rel_path=album.rel_path)
