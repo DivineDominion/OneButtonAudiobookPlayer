@@ -72,3 +72,6 @@ class Player:
         print("Changing to album \"%s\"" % album.name())
         self.album = album
         self.mpd_adapter.replace_playlist(rel_path=album.rel_path)
+
+    def current_album(self):
+        return self.album

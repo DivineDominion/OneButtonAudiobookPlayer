@@ -6,3 +6,6 @@ class Album:
 
     def name(self):
         return os.path.basename(self.rel_path)
+
+    def __eq__(self, other):
+        return self.rel_path == other.rel_path

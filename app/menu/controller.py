@@ -25,6 +25,8 @@ class MenuController:
 
     def on_next_book(self):
         print("Exec Next Book")
+        self.app.next_album()
+        self.player.play()
 
     def on_prev_book(self):
         print("Exec Prev Book")

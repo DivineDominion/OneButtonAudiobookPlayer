@@ -45,7 +45,7 @@ class App:
             return
 
         self.player.change_album(albums[0])
-        
+
     #
     # Menu management
     #
@@ -96,3 +96,11 @@ class App:
             self.confirm_selection()
         else:
             self.open_new_menu()
+
+    #
+    # Album changes
+    #
+
+    def next_album(self):
+        album = self.lib.next_album(self.player.current_album())
+        self.player.change_album(album)
