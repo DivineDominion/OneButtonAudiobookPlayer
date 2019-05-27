@@ -8,7 +8,9 @@ class MPDAdapter:
         self.client = mpd.MPDClient()
         self.client.connect(HOST, PORT)
         print("MPD: " + self.client.mpd_version)
-        print(self.client.status())
+        print("Updating ...")
+        self.client.update()
+        print("Status: %s" % self.client.status())
 
     def __del__(self):
         print("Closing MPD connection ...")
